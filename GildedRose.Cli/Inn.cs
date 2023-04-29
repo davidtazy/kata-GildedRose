@@ -29,74 +29,75 @@ public class Inn
             UpdateQuality(item);
     }
 
-    public static void UpdateQuality(Item v)
+    public static void UpdateQuality(Item item)
     {
-        if (v.Name != "Aged Brie" && v.Name != "Backstage passes to a TAFKAL80ETC concert")
+        if (item.Name == "Sulfuras, Hand of Ragnaros")
+            return;
+
+
+        if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
         {
-            if (v.Quality > 0)
+            if (item.Quality > 0)
             {
-                if (v.Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    v.Quality = v.Quality - 1;
-                }
+
+                item.Quality = item.Quality - 1;
+
             }
         }
         else
         {
-            if (v.Quality < 50)
+            if (item.Quality < 50)
             {
-                v.Quality = v.Quality + 1;
+                item.Quality = item.Quality + 1;
 
-                if (v.Name == "Backstage passes to a TAFKAL80ETC concert")
+                if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (v.SellIn < 11)
+                    if (item.SellIn < 11)
                     {
-                        if (v.Quality < 50)
+                        if (item.Quality < 50)
                         {
-                            v.Quality = v.Quality + 1;
+                            item.Quality = item.Quality + 1;
                         }
                     }
 
-                    if (v.SellIn < 6)
+                    if (item.SellIn < 6)
                     {
-                        if (v.Quality < 50)
+                        if (item.Quality < 50)
                         {
-                            v.Quality = v.Quality + 1;
+                            item.Quality = item.Quality + 1;
                         }
                     }
                 }
             }
         }
 
-        if (v.Name != "Sulfuras, Hand of Ragnaros")
-        {
-            v.SellIn = v.SellIn - 1;
-        }
 
-        if (v.SellIn < 0)
+        item.SellIn = item.SellIn - 1;
+
+
+        if (item.SellIn < 0)
         {
-            if (v.Name != "Aged Brie")
+            if (item.Name != "Aged Brie")
             {
-                if (v.Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (v.Quality > 0)
+                    if (item.Quality > 0)
                     {
-                        if (v.Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            v.Quality = v.Quality - 1;
-                        }
+
+                        item.Quality = item.Quality - 1;
+
                     }
                 }
                 else
                 {
-                    v.Quality = v.Quality - v.Quality;
+                    item.Quality = item.Quality - item.Quality;
                 }
             }
             else
             {
-                if (v.Quality < 50)
+                if (item.Quality < 50)
                 {
-                    v.Quality = v.Quality + 1;
+                    item.Quality = item.Quality + 1;
                 }
             }
         }

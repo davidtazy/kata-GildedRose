@@ -29,10 +29,23 @@
         [Test]
         public void Sulfuras_never_has_to_be_sold_or_decreases_in_Quality()
         {
-            var item = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 };
+            for (int sell_in = -1; sell_in < 20; sell_in++)
+            {
+                for (int quality = -1; quality < 80; quality++)
+                {
+                    var init = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sell_in, Quality = quality };
+                    var item = new Item(init);
+                    Inn.UpdateQuality(item);
+                    Assert.AreEqual(init, item);
+                }
+            }
+
+
 
 
 
         }
+
+
     }
 }
