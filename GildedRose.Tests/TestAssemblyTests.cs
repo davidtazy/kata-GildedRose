@@ -41,7 +41,7 @@
                 foreach (int sell_in in sell_in_list)
                 {
                     int quality = 50;
-                    var item = new Item { Name = name, SellIn = sell_in, Quality = quality };
+                    var item = new TestableItem { Name = name, SellIn = sell_in, Quality = quality };
 
                     Inn.UpdateQuality(item);
                     Assert.LessOrEqual(item.Quality, quality, item.Name);
@@ -58,7 +58,7 @@
                 foreach (int sell_in in sell_in_list)
                 {
                     int quality = 50;
-                    var item = new Item { Name = name, SellIn = sell_in, Quality = quality };
+                    var item = new TestableItem { Name = name, SellIn = sell_in, Quality = quality };
 
                     Inn.UpdateQuality(item);
                     Assert.AreEqual(sell_in - 1, item.SellIn);
@@ -75,7 +75,7 @@
             {
                 foreach (int sell_in in sell_in_list)
                 {
-                    var item = new Item { Name = name, SellIn = sell_in, Quality = zero };
+                    var item = new TestableItem { Name = name, SellIn = sell_in, Quality = zero };
 
                     Inn.UpdateQuality(item);
                     Assert.GreaterOrEqual(item.Quality, zero, item.Name);
@@ -92,7 +92,7 @@
 
             foreach (int sell_in in sell_in_list)
             {
-                var item = new Item { Name = "dont care name", SellIn = sell_in, Quality = quality };
+                var item = new TestableItem { Name = "dont care name", SellIn = sell_in, Quality = quality };
 
                 Inn.UpdateQuality(item);
                 Assert.AreEqual(quality - 2, item.Quality, sell_in.ToString());
@@ -108,8 +108,8 @@
             {
                 for (int quality = -1; quality < 80; quality++)
                 {
-                    var init = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sell_in, Quality = quality };
-                    var item = new Item(init);
+                    var init = new TestableItem { Name = "Sulfuras, Hand of Ragnaros", SellIn = sell_in, Quality = quality };
+                    var item = new TestableItem(init);
                     Inn.UpdateQuality(item);
                     Assert.AreEqual(init, item);
                 }
@@ -122,7 +122,7 @@
         public void Aged_Brie_actually_increases_in_Quality_the_older_it_gets()
         {
             int quality = 20;
-            var item = new Item { Name = "Aged Brie", SellIn = 10, Quality = quality };
+            var item = new TestableItem { Name = "Aged Brie", SellIn = 10, Quality = quality };
 
             Inn.UpdateQuality(item);
             Assert.AreEqual(quality + 1, item.Quality);
@@ -132,7 +132,7 @@
         public void Once_sell_in_has_passed_Aged_Brie_actually_increases_twice_faster()
         {
             int quality = 20;
-            var item = new Item { Name = "Aged Brie", SellIn = -1, Quality = quality };
+            var item = new TestableItem { Name = "Aged Brie", SellIn = -1, Quality = quality };
 
             Inn.UpdateQuality(item);
             Assert.AreEqual(quality + 2, item.Quality);
@@ -144,7 +144,7 @@
         public void Backstage_passes_increases_in_Quality_as_its_SellIn_greater_than_10()
         {
             int quality = 20;
-            var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = quality };
+            var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = quality };
 
             Inn.UpdateQuality(item);
             Assert.AreEqual(quality + 1, item.Quality);
@@ -157,7 +157,7 @@
             var sell_in_list = new int[] { 6, 7, 8, 9, 10 };
             foreach (int sell_in in sell_in_list)
             {
-                var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
+                var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
                 Inn.UpdateQuality(item);
                 Assert.AreEqual(quality + 2, item.Quality, sell_in.ToString());
             }
@@ -170,7 +170,7 @@
             var sell_in_list = new int[] { 1, 2, 3, 4, 5 };
             foreach (int sell_in in sell_in_list)
             {
-                var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
+                var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
                 Inn.UpdateQuality(item);
                 Assert.AreEqual(quality + 3, item.Quality, sell_in.ToString());
             }
@@ -183,7 +183,7 @@
             var sell_in_list = new int[] { -10, -1, 0 };
             foreach (int sell_in in sell_in_list)
             {
-                var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
+                var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
                 Inn.UpdateQuality(item);
                 Assert.AreEqual(0, item.Quality, sell_in.ToString());
             }
