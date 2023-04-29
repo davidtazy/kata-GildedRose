@@ -25,5 +25,14 @@
                 Assert.That(inn_leg.ToString(), Is.EqualTo(inn.ToString()).NoClip);
             }
         }
+
+        [Test]
+        public void Sulfuras_never_has_to_be_sold_or_decreases_in_Quality()
+        {
+            var item = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 };
+
+
+
+        }
     }
 }
