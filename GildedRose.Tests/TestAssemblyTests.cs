@@ -7,7 +7,7 @@
     public class TestAssemblyTests
     {
 
-        string[] ItemsNames = new string[] { "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros", "Dont care name" };
+        string[] MutableItemsNames = new string[] { "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Dont care name" };
 
 
         [Test]
@@ -35,16 +35,16 @@
         [Test]
         public void Items_quality_never_more_than_50()
         {
-            var sell_in_list = new int[] { -1, 0, 1 };
-            foreach (var name in ItemsNames)
+            var sell_in_list = new int[] { -1, 1, 0 };
+            foreach (var name in MutableItemsNames)
             {
                 foreach (int sell_in in sell_in_list)
                 {
                     int quality = 50;
-                    var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
+                    var item = new Item { Name = name, SellIn = sell_in, Quality = quality };
 
                     Inn.UpdateQuality(item);
-                    Assert.AreEqual(quality, item.Quality);
+                    Assert.LessOrEqual(item.Quality, quality, item.Name);
                 }
             }
         }
@@ -53,12 +53,12 @@
         public void Items_sell_in_decreased_every_day()
         {
             var sell_in_list = new int[] { -1, 0, 1 };
-            foreach (var name in ItemsNames)
+            foreach (var name in MutableItemsNames)
             {
                 foreach (int sell_in in sell_in_list)
                 {
                     int quality = 50;
-                    var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
+                    var item = new Item { Name = name, SellIn = sell_in, Quality = quality };
 
                     Inn.UpdateQuality(item);
                     Assert.AreEqual(sell_in - 1, item.SellIn);
