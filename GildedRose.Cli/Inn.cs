@@ -37,10 +37,8 @@ public class Inn
 
         if (item.Name == "Aged Brie")
         {
-            if (item.Quality < 50)
-            {
-                item.Quality = item.Quality + 1;
-            }
+            IncreaseQualityBy(item, 1);
+
             item.SellIn = item.SellIn - 1;
 
             if (item.SellIn < 0)
@@ -56,32 +54,14 @@ public class Inn
 
         if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
         {
-            if (item.Quality < 50)
-            {
-                item.Quality = item.Quality + 1;
+            if (item.SellIn < 6) IncreaseQualityBy(item, 3);
+            else if (item.SellIn < 11) IncreaseQualityBy(item, 2);
+            else IncreaseQualityBy(item, 1);
 
-
-                if (item.SellIn < 11)
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
-
-                if (item.SellIn < 6)
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
-            }
             item.SellIn = item.SellIn - 1;
-            if (item.SellIn < 0)
-            {
-                item.Quality = item.Quality - item.Quality;
-            }
+
+            if (item.SellIn < 0) item.Quality = 0;
+
             return;
         }
 
@@ -100,11 +80,19 @@ public class Inn
         {
             if (item.Quality > 0)
             {
-
                 item.Quality = item.Quality - 1;
-
             }
         }
+    }
+
+    private static void IncreaseQualityBy(Item item, int increment)
+    {
+        item.Quality += increment;
+        if (item.Quality > 50)
+        {
+            item.Quality = 50;
+        }
+
     }
 
     public override string ToString()
