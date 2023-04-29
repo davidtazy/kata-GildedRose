@@ -16,9 +16,6 @@
             var inn = new Inn();
             var inn_leg = new InnLegacy();
 
-            System.Console.WriteLine(inn);
-            System.Console.WriteLine(inn_leg);
-
             Assert.That(inn_leg.ToString(), Is.EqualTo(inn.ToString()).NoClip);
 
             for (int i = 0; i < 16; i++)
@@ -84,7 +81,23 @@
         }
 
         [Test]
-        public void for_other_items_once_the_sell_by_date_has_passed_Quality_degrades_twice_as_fast()
+        public void for_normal_items_Quality_decrease_by_one_everyday_will_sell_in_has_not_passed()
+        {
+            var sell_in_list = new int[] { 10, 5, 1 };
+
+            int quality = 10;
+
+            foreach (int sell_in in sell_in_list)
+            {
+                var item = new TestableItem { Name = "dont care name", SellIn = sell_in, Quality = quality };
+
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality - 1, item.Quality, sell_in.ToString());
+            }
+        }
+
+        [Test]
+        public void for_normal_items_once_the_sell_by_date_has_passed_Quality_degrades_twice_as_fast()
         {
             var sell_in_list = new int[] { -1, 0, -2 };
 
@@ -187,6 +200,15 @@
                 Inn.UpdateQuality(item);
                 Assert.AreEqual(0, item.Quality, sell_in.ToString());
             }
+        }
+
+
+        ///////   Conjured items ////////
+
+        [Test]
+        public void Conjured_items_degrade_in_Quality_twice_as_fast_as_normal_items()
+        {
+
         }
 
 
