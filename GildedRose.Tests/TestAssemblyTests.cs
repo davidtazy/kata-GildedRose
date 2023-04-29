@@ -30,7 +30,7 @@
             }
         }
 
-        ///////////////// test common properties /////////////////
+        ///////////////// test common properties  /////////////////
 
         [Test]
         public void Items_quality_never_more_than_50()
@@ -62,6 +62,23 @@
 
                     Inn.UpdateQuality(item);
                     Assert.AreEqual(sell_in - 1, item.SellIn);
+                }
+            }
+        }
+
+        [Test]
+        public void Items_quality_is_never_negative()
+        {
+            int zero = 0;
+            var sell_in_list = new int[] { -1, 0, 1 };
+            foreach (var name in MutableItemsNames)
+            {
+                foreach (int sell_in in sell_in_list)
+                {
+                    var item = new Item { Name = name, SellIn = sell_in, Quality = zero };
+
+                    Inn.UpdateQuality(item);
+                    Assert.GreaterOrEqual(item.Quality, zero, item.Name);
                 }
             }
         }
