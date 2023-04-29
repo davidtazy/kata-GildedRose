@@ -39,11 +39,28 @@
                     Assert.AreEqual(init, item);
                 }
             }
+        }
 
 
 
+        [Test]
+        public void Aged_Brie_actually_increases_in_Quality_the_older_it_gets()
+        {
+            int quality = 20;
+            var item = new Item { Name = "Aged Brie", SellIn = 10, Quality = quality };
 
+            Inn.UpdateQuality(item);
+            Assert.AreEqual(quality + 1, item.Quality);
+        }
 
+        [Test]
+        public void Aged_Brie_quality_never_more_than_50()
+        {
+            int quality = 50;
+            var item = new Item { Name = "Aged Brie", SellIn = 10, Quality = quality };
+
+            Inn.UpdateQuality(item);
+            Assert.AreEqual(quality, item.Quality);
         }
 
 
