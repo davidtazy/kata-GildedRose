@@ -37,26 +37,20 @@ public class Inn
 
         if (item.Name == "Aged Brie")
         {
-            IncreaseQualityBy(item, 1);
+            IncreaseItemQualityBy(item, 1);
 
             item.SellIn = item.SellIn - 1;
 
-            if (item.SellIn < 0)
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-                }
+            if (item.SellIn < 0) IncreaseItemQualityBy(item, 1);
 
-            }
             return;
         }
 
         if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
         {
-            if (item.SellIn < 6) IncreaseQualityBy(item, 3);
-            else if (item.SellIn < 11) IncreaseQualityBy(item, 2);
-            else IncreaseQualityBy(item, 1);
+            if (item.SellIn < 6) IncreaseItemQualityBy(item, 3);
+            else if (item.SellIn < 11) IncreaseItemQualityBy(item, 2);
+            else IncreaseItemQualityBy(item, 1);
 
             item.SellIn = item.SellIn - 1;
 
@@ -65,34 +59,24 @@ public class Inn
             return;
         }
 
+        /// other items strategy
 
-        if (item.Quality > 0)
-        {
-            item.Quality = item.Quality - 1;
-        }
-
-
+        DecreaseItemQuality(item);
 
         item.SellIn = item.SellIn - 1;
 
+        if (item.SellIn < 0) DecreaseItemQuality(item);
 
-        if (item.SellIn < 0)
-        {
-            if (item.Quality > 0)
-            {
-                item.Quality = item.Quality - 1;
-            }
-        }
     }
 
-    private static void IncreaseQualityBy(Item item, int increment)
+    private static void IncreaseItemQualityBy(Item item, int increment)
     {
-        item.Quality += increment;
-        if (item.Quality > 50)
-        {
-            item.Quality = 50;
-        }
+        item.Quality = Math.Min(item.Quality + increment, 50);
+    }
 
+    private static void DecreaseItemQuality(Item item)
+    {
+        item.Quality = Math.Max(item.Quality - 1, 0);
     }
 
     public override string ToString()
