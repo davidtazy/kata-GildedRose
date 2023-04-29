@@ -83,6 +83,22 @@
             }
         }
 
+        [Test]
+        public void for_other_items_once_the_sell_by_date_has_passed_Quality_degrades_twice_as_fast()
+        {
+            var sell_in_list = new int[] { -1, 0, -2 };
+
+            int quality = 10;
+
+            foreach (int sell_in in sell_in_list)
+            {
+                var item = new Item { Name = "dont care name", SellIn = sell_in, Quality = quality };
+
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality - 2, item.Quality, sell_in.ToString());
+            }
+        }
+
         /////////// Sulfuras tests /////////////////////// 
 
         [Test]
