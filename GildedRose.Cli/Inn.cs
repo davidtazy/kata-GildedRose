@@ -31,51 +31,66 @@ public class Inn
 
     public static void UpdateQuality(Item item)
     {
-        if (item.Name == "Sulfuras, Hand of Ragnaros")
-            return;
+        int twice_as_normal = 2;
 
-        if (item.Name == "Aged Brie")
+        switch (item.Name)
         {
-            IncreaseItemQualityBy(item, 1);
+            case "Sulfuras, Hand of Ragnaros":
+                break;
 
-            item.SellIn = item.SellIn - 1;
+            case "Aged Brie":
+                IncreaseItemQualityBy(item, 1);
 
-            if (item.SellIn < 0) IncreaseItemQualityBy(item, 1);
+                AdvanceOneDay(item);
 
-            return;
+                if (HasSellInHasPassed(item)) IncreaseItemQualityBy(item, 1);
+
+                break;
+
+            case "Backstage passes to a TAFKAL80ETC concert":
+                switch (item.SellIn)
+                {
+                    case < 6:
+                        IncreaseItemQualityBy(item, 3);
+                        break;
+                    case < 11:
+                        IncreaseItemQualityBy(item, 2);
+                        break;
+                    default:
+                        IncreaseItemQualityBy(item, 1);
+                        break;
+                }
+
+                AdvanceOneDay(item);
+
+                if (HasSellInHasPassed(item)) item.Quality = 0;
+
+                break;
+
+            case "Conjured":
+
+                NormalItemStrategy(item, twice_as_normal);
+                break;
+
+            default:
+                NormalItemStrategy(item);
+                break;
         }
 
-        if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-        {
-            if (item.SellIn < 6) IncreaseItemQualityBy(item, 3);
-            else if (item.SellIn < 11) IncreaseItemQualityBy(item, 2);
-            else IncreaseItemQualityBy(item, 1);
 
-            item.SellIn = item.SellIn - 1;
-
-            if (item.SellIn < 0) item.Quality = 0;
-
-            return;
-        }
-
-        if (item.Name == "Conjured")
-        {
-            int factor = 2;
-            NormalItemStrategy(item, factor);
-            return;
-        }
-
-        NormalItemStrategy(item);
 
     }
 
     private static void NormalItemStrategy(Item item, int factor = 1)
     {
         DecreaseItemQualityBy(item, factor);
+        AdvanceOneDay(item);
+        if (HasSellInHasPassed(item)) DecreaseItemQualityBy(item, factor);
+    }
 
+    private static void AdvanceOneDay(Item item)
+    {
         item.SellIn -= 1;
-
-        if (item.SellIn < 0) DecreaseItemQualityBy(item, factor);
     }
 
     private static void IncreaseItemQualityBy(Item item, int increment)
@@ -86,6 +101,11 @@ public class Inn
     private static void DecreaseItemQualityBy(Item item, int increment)
     {
         item.Quality = Math.Max(item.Quality - increment, 0);
+    }
+
+    private static bool HasSellInHasPassed(Item item)
+    {
+        return item.SellIn < 0;
     }
 
     public override string ToString()
