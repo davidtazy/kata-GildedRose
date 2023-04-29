@@ -105,6 +105,57 @@
             Assert.AreEqual(quality + 2, item.Quality);
         }
 
+        ///////////////   //////////////////////
+
+        [Test]
+        public void Backstage_passes_increases_in_Quality_as_its_SellIn_greater_than_10()
+        {
+            int quality = 20;
+            var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = quality };
+
+            Inn.UpdateQuality(item);
+            Assert.AreEqual(quality + 1, item.Quality);
+        }
+
+        [Test]
+        public void Backstage_passes_increases_by_2_in_Quality_as_its_SellIn_greater_than_5_and_less_than_11()
+        {
+            int quality = 20;
+            var sell_in_list = new int[] { 6, 7, 8, 9, 10 };
+            foreach (int sell_in in sell_in_list)
+            {
+                var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality + 2, item.Quality, sell_in.ToString());
+            }
+        }
+
+        [Test]
+        public void Backstage_passes_increases_by_3_in_Quality_as_its_SellIn_greater_than_0_and_less_than_6()
+        {
+            int quality = 20;
+            var sell_in_list = new int[] { 1, 2, 3, 4, 5 };
+            foreach (int sell_in in sell_in_list)
+            {
+                var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality + 3, item.Quality, sell_in.ToString());
+            }
+        }
+
+        [Test]
+        public void Backstage_passes_drop_to_0_in_Quality_as_its_SellIn_has_passed()
+        {
+            int quality = 20;
+            var sell_in_list = new int[] { -10, -1, 0 };
+            foreach (int sell_in in sell_in_list)
+            {
+                var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(0, item.Quality, sell_in.ToString());
+            }
+        }
+
 
 
 
