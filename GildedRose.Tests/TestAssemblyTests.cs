@@ -20,7 +20,7 @@
 
             for (int i = 0; i < 16; i++)
             {
-                inn.UpdateQuality();
+                inn.AdvanceOneDayAndUpdateQuality();
                 inn_leg.UpdateQuality();
 
                 Assert.That(inn_leg.ToString(), Is.EqualTo(inn.ToString()).NoClip);
@@ -40,7 +40,7 @@
                     int quality = 50;
                     var item = new TestableItem { Name = name, SellIn = sell_in, Quality = quality };
 
-                    Inn.UpdateQuality(item);
+                    Inn.AdvanceOneDayUpdateQuality(item);
                     Assert.LessOrEqual(item.Quality, quality, item.Name);
                 }
             }
@@ -57,7 +57,7 @@
                     int quality = 50;
                     var item = new TestableItem { Name = name, SellIn = sell_in, Quality = quality };
 
-                    Inn.UpdateQuality(item);
+                    Inn.AdvanceOneDayUpdateQuality(item);
                     Assert.AreEqual(sell_in - 1, item.SellIn);
                 }
             }
@@ -74,7 +74,7 @@
                 {
                     var item = new TestableItem { Name = name, SellIn = sell_in, Quality = zero };
 
-                    Inn.UpdateQuality(item);
+                    Inn.AdvanceOneDayUpdateQuality(item);
                     Assert.GreaterOrEqual(item.Quality, zero, item.Name);
                 }
             }
@@ -91,7 +91,7 @@
             {
                 var item = new TestableItem { Name = "dont care name", SellIn = sell_in, Quality = quality };
 
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(quality - 1, item.Quality, sell_in.ToString());
             }
         }
@@ -107,7 +107,7 @@
             {
                 var item = new TestableItem { Name = "dont care name", SellIn = sell_in, Quality = quality };
 
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(quality - 2, item.Quality, sell_in.ToString());
             }
         }
@@ -123,7 +123,7 @@
                 {
                     var init = new TestableItem { Name = "Sulfuras, Hand of Ragnaros", SellIn = sell_in, Quality = quality };
                     var item = new TestableItem(init);
-                    Inn.UpdateQuality(item);
+                    Inn.AdvanceOneDayUpdateQuality(item);
                     Assert.AreEqual(init, item);
                 }
             }
@@ -137,7 +137,7 @@
             int quality = 20;
             var item = new TestableItem { Name = "Aged Brie", SellIn = 10, Quality = quality };
 
-            Inn.UpdateQuality(item);
+            Inn.AdvanceOneDayUpdateQuality(item);
             Assert.AreEqual(quality + 1, item.Quality);
         }
 
@@ -147,7 +147,7 @@
             int quality = 20;
             var item = new TestableItem { Name = "Aged Brie", SellIn = -1, Quality = quality };
 
-            Inn.UpdateQuality(item);
+            Inn.AdvanceOneDayUpdateQuality(item);
             Assert.AreEqual(quality + 2, item.Quality);
         }
 
@@ -159,7 +159,7 @@
             int quality = 20;
             var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 11, Quality = quality };
 
-            Inn.UpdateQuality(item);
+            Inn.AdvanceOneDayUpdateQuality(item);
             Assert.AreEqual(quality + 1, item.Quality);
         }
 
@@ -171,7 +171,7 @@
             foreach (int sell_in in sell_in_list)
             {
                 var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(quality + 2, item.Quality, sell_in.ToString());
             }
         }
@@ -184,7 +184,7 @@
             foreach (int sell_in in sell_in_list)
             {
                 var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(quality + 3, item.Quality, sell_in.ToString());
             }
         }
@@ -197,7 +197,7 @@
             foreach (int sell_in in sell_in_list)
             {
                 var item = new TestableItem { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sell_in, Quality = quality };
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(0, item.Quality, sell_in.ToString());
             }
         }
@@ -215,7 +215,7 @@
             {
                 var item = new TestableItem { Name = "Conjured", SellIn = sell_in, Quality = quality };
 
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(quality - 2, item.Quality, sell_in.ToString());
             }
 
@@ -224,7 +224,7 @@
             {
                 var item = new TestableItem { Name = "Conjured", SellIn = sell_in, Quality = quality };
 
-                Inn.UpdateQuality(item);
+                Inn.AdvanceOneDayUpdateQuality(item);
                 Assert.AreEqual(quality - 4, item.Quality, sell_in.ToString());
             }
         }

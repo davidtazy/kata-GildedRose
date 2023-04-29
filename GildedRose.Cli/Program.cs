@@ -18,7 +18,8 @@ namespace GildedRose.Cli
             while (System.Console.ReadKey().Key != ConsoleKey.Escape)
             {
                 System.Console.WriteLine("Go to next day...");
-                inn.UpdateQuality();
+                inn.AdvanceOneDayAndUpdateQuality();
+                System.Console.WriteLine(inn.ToString());
             }
 
             System.Console.WriteLine("Ciao...");

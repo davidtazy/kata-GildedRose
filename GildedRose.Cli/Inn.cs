@@ -23,69 +23,73 @@ public class Inn
     }
 
 
-    public void UpdateQuality()
+    public void AdvanceOneDayAndUpdateQuality()
     {
         foreach (Item item in Items)
-            UpdateQuality(item);
+            AdvanceOneDayUpdateQuality(item);
     }
 
-    public static void UpdateQuality(Item item)
+    public static void AdvanceOneDayUpdateQuality(Item item)
     {
+        if (item.Name == "Sulfuras, Hand of Ragnaros") return;
+
+        AdvanceOneDay(item);
+
         int twice_as_normal = 2;
+        int normal = 1;
 
         switch (item.Name)
         {
-            case "Sulfuras, Hand of Ragnaros":
-                break;
-
             case "Aged Brie":
-                IncreaseItemQualityBy(item, 1);
 
-                AdvanceOneDay(item);
+                if (HasSellInHasPassed(item))
+                {
+                    IncreaseItemQualityBy(item, twice_as_normal);
+                    break;
+                }
 
-                if (HasSellInHasPassed(item)) IncreaseItemQualityBy(item, 1);
+                IncreaseItemQualityBy(item, normal);
 
                 break;
 
             case "Backstage passes to a TAFKAL80ETC concert":
+
                 switch (item.SellIn)
                 {
-                    case < 6:
+                    case < 0:
+                        item.Quality = 0;
+                        break;
+                    case < 5:
                         IncreaseItemQualityBy(item, 3);
                         break;
-                    case < 11:
+                    case < 10:
                         IncreaseItemQualityBy(item, 2);
                         break;
                     default:
                         IncreaseItemQualityBy(item, 1);
                         break;
                 }
-
-                AdvanceOneDay(item);
-
-                if (HasSellInHasPassed(item)) item.Quality = 0;
-
                 break;
 
             case "Conjured":
 
-                NormalItemStrategy(item, twice_as_normal);
+                UpdateQualityForNormalItems(item, twice_as_normal);
                 break;
 
             default:
-                NormalItemStrategy(item);
+                UpdateQualityForNormalItems(item);
                 break;
         }
-
-
-
     }
 
-    private static void NormalItemStrategy(Item item, int factor = 1)
+    private static void UpdateQualityForNormalItems(Item item, int increment = 1)
     {
-        DecreaseItemQualityBy(item, factor);
-        AdvanceOneDay(item);
-        if (HasSellInHasPassed(item)) DecreaseItemQualityBy(item, factor);
+        if (HasSellInHasPassed(item))
+        {
+            DecreaseItemQualityBy(item, increment * 2);
+            return;
+        }
+        DecreaseItemQualityBy(item, increment);
     }
 
     private static void AdvanceOneDay(Item item)
