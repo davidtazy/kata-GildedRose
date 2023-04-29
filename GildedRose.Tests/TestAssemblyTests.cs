@@ -54,13 +54,27 @@
         }
 
         [Test]
-        public void Aged_Brie_quality_never_more_than_50()
+        public void Once_sell_in_has_passed_Aged_Brie_actually_increases_twice_faster()
         {
-            int quality = 50;
-            var item = new Item { Name = "Aged Brie", SellIn = 10, Quality = quality };
+            int quality = 20;
+            var item = new Item { Name = "Aged Brie", SellIn = -1, Quality = quality };
 
             Inn.UpdateQuality(item);
-            Assert.AreEqual(quality, item.Quality);
+            Assert.AreEqual(quality + 2, item.Quality);
+        }
+
+        [Test]
+        public void Aged_Brie_quality_never_more_than_50()
+        {
+            var sell_in_list = new int[] { -1, 0, 1 };
+            foreach (int sell_in in sell_in_list)
+            {
+                int quality = 50;
+                var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
+
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality, item.Quality);
+            }
         }
 
 

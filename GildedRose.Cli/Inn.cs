@@ -41,9 +41,20 @@ public class Inn
             {
                 item.Quality = item.Quality + 1;
             }
+            item.SellIn = item.SellIn - 1;
+
+            if (item.SellIn < 0)
+            {
+                if (item.Quality < 50)
+                {
+                    item.Quality = item.Quality + 1;
+                }
+
+            }
+            return;
         }
 
-        else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+        if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
         {
             if (item.Quality < 50)
             {
@@ -72,9 +83,7 @@ public class Inn
         {
             if (item.Quality > 0)
             {
-
                 item.Quality = item.Quality - 1;
-
             }
         }
 
@@ -84,29 +93,21 @@ public class Inn
 
         if (item.SellIn < 0)
         {
-            if (item.Name == "Aged Brie")
+
+            if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
             {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-                }
+                item.Quality = item.Quality - item.Quality;
             }
             else
             {
-                if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
+                if (item.Quality > 0)
                 {
-                    if (item.Quality > 0)
-                    {
 
-                        item.Quality = item.Quality - 1;
+                    item.Quality = item.Quality - 1;
 
-                    }
-                }
-                else
-                {
-                    item.Quality = item.Quality - item.Quality;
                 }
             }
+
         }
     }
 
