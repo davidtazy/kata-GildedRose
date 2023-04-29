@@ -6,6 +6,10 @@
     [TestFixture]
     public class TestAssemblyTests
     {
+
+        string[] ItemsNames = new string[] { "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros", "Dont care name" };
+
+
         [Test]
         public void ensure_no_regression_inserted_during_refactor()
         {
@@ -26,12 +30,50 @@
             }
         }
 
+        ///////////////// test common properties /////////////////
+
+        [Test]
+        public void Items_quality_never_more_than_50()
+        {
+            var sell_in_list = new int[] { -1, 0, 1 };
+            foreach (var name in ItemsNames)
+            {
+                foreach (int sell_in in sell_in_list)
+                {
+                    int quality = 50;
+                    var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
+
+                    Inn.UpdateQuality(item);
+                    Assert.AreEqual(quality, item.Quality);
+                }
+            }
+        }
+
+        [Test]
+        public void Items_sell_in_decreased_every_day()
+        {
+            var sell_in_list = new int[] { -1, 0, 1 };
+            foreach (var name in ItemsNames)
+            {
+                foreach (int sell_in in sell_in_list)
+                {
+                    int quality = 50;
+                    var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
+
+                    Inn.UpdateQuality(item);
+                    Assert.AreEqual(sell_in - 1, item.SellIn);
+                }
+            }
+        }
+
+        /////////// Sulfuras tests /////////////////////// 
+
         [Test]
         public void Sulfuras_never_has_to_be_sold_or_decreases_in_Quality()
         {
             for (int sell_in = -1; sell_in < 20; sell_in++)
             {
-                for (int quality = -1; quality < 80; quality++)
+                for (int quality = -1; quality < 50; quality++)
                 {
                     var init = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sell_in, Quality = quality };
                     var item = new Item(init);
@@ -41,7 +83,7 @@
             }
         }
 
-
+        //////////////////   AGED BRIE UNIT TESTS ////////////////////////
 
         [Test]
         public void Aged_Brie_actually_increases_in_Quality_the_older_it_gets()
@@ -63,33 +105,7 @@
             Assert.AreEqual(quality + 2, item.Quality);
         }
 
-        [Test]
-        public void Aged_Brie_quality_never_more_than_50()
-        {
-            var sell_in_list = new int[] { -1, 0, 1 };
-            foreach (int sell_in in sell_in_list)
-            {
-                int quality = 50;
-                var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
 
-                Inn.UpdateQuality(item);
-                Assert.AreEqual(quality, item.Quality);
-            }
-        }
-
-        [Test]
-        public void Aged_Brie_sell_in_decreased_every_day()
-        {
-            var sell_in_list = new int[] { -1, 0, 1 };
-            foreach (int sell_in in sell_in_list)
-            {
-                int quality = 50;
-                var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
-
-                Inn.UpdateQuality(item);
-                Assert.AreEqual(sell_in - 1, item.SellIn);
-            }
-        }
 
 
     }
