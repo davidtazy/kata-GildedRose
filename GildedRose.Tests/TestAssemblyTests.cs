@@ -106,7 +106,7 @@
         {
             for (int sell_in = -1; sell_in < 20; sell_in++)
             {
-                for (int quality = -1; quality < 50; quality++)
+                for (int quality = -1; quality < 80; quality++)
                 {
                     var init = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = sell_in, Quality = quality };
                     var item = new Item(init);
