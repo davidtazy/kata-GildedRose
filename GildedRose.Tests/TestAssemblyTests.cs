@@ -208,7 +208,25 @@
         [Test]
         public void Conjured_items_degrade_in_Quality_twice_as_fast_as_normal_items()
         {
+            int quality = 10;
 
+            var positive_sell_in_list = new int[] { 10, 5, 1 };
+            foreach (int sell_in in positive_sell_in_list)
+            {
+                var item = new TestableItem { Name = "Conjured", SellIn = sell_in, Quality = quality };
+
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality - 2, item.Quality, sell_in.ToString());
+            }
+
+            var negative_sell_in_list = new int[] { -10, -5, -1 };
+            foreach (int sell_in in negative_sell_in_list)
+            {
+                var item = new TestableItem { Name = "Conjured", SellIn = sell_in, Quality = quality };
+
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(quality - 4, item.Quality, sell_in.ToString());
+            }
         }
 
 

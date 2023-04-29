@@ -34,7 +34,6 @@ public class Inn
         if (item.Name == "Sulfuras, Hand of Ragnaros")
             return;
 
-
         if (item.Name == "Aged Brie")
         {
             IncreaseItemQualityBy(item, 1);
@@ -59,14 +58,24 @@ public class Inn
             return;
         }
 
-        /// other items strategy
+        if (item.Name == "Conjured")
+        {
+            int factor = 2;
+            NormalItemStrategy(item, factor);
+            return;
+        }
 
-        DecreaseItemQuality(item);
+        NormalItemStrategy(item);
 
-        item.SellIn = item.SellIn - 1;
+    }
 
-        if (item.SellIn < 0) DecreaseItemQuality(item);
+    private static void NormalItemStrategy(Item item, int factor = 1)
+    {
+        DecreaseItemQualityBy(item, factor);
 
+        item.SellIn -= 1;
+
+        if (item.SellIn < 0) DecreaseItemQualityBy(item, factor);
     }
 
     private static void IncreaseItemQualityBy(Item item, int increment)
@@ -74,9 +83,9 @@ public class Inn
         item.Quality = Math.Min(item.Quality + increment, 50);
     }
 
-    private static void DecreaseItemQuality(Item item)
+    private static void DecreaseItemQualityBy(Item item, int increment)
     {
-        item.Quality = Math.Max(item.Quality - 1, 0);
+        item.Quality = Math.Max(item.Quality - increment, 0);
     }
 
     public override string ToString()
