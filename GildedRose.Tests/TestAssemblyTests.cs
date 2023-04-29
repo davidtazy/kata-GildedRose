@@ -77,6 +77,20 @@
             }
         }
 
+        [Test]
+        public void Aged_Brie_sell_in_decreased_every_day()
+        {
+            var sell_in_list = new int[] { -1, 0, 1 };
+            foreach (int sell_in in sell_in_list)
+            {
+                int quality = 50;
+                var item = new Item { Name = "Aged Brie", SellIn = sell_in, Quality = quality };
+
+                Inn.UpdateQuality(item);
+                Assert.AreEqual(sell_in - 1, item.SellIn);
+            }
+        }
+
 
     }
 }
