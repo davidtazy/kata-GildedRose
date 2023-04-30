@@ -42,14 +42,8 @@ public class Inn
         {
             case "Aged Brie":
 
-                if (HasSellInHasPassed(item))
-                {
-                    IncreaseItemQualityBy(item, twice_as_normal);
-                    break;
-                }
-
-                IncreaseItemQualityBy(item, normal);
-
+                if (HasSellInHasPassed(item)) IncreaseItemQualityBy(item, twice_as_normal);
+                else IncreaseItemQualityBy(item, normal);
                 break;
 
             case "Backstage passes to a TAFKAL80ETC concert":

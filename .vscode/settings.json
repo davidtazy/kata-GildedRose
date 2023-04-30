@@ -1,5 +1,6 @@
 {
     "dotnet-test-explorer.autoExpandTree": true,
     "dotnet-test-explorer.autoWatch": true,
-    "dotnet-test-explorer.enableTelemetry": false
+    "dotnet-test-explorer.enableTelemetry": false,
+    "dotnet-test-explorer.testArguments": "/p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=./lcov.info"
 }
